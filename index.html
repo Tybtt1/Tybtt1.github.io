@@ -12,70 +12,87 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #41AF0E 0%, #82DD58 100%);
-            background-attachment: fixed;
+            font-family: 'Courier New', monospace;
             color: #fff;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Animated background particles */
-        body::before {
-            content: '';
+        #world-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px, 80px 80px, 60px 60px;
-            animation: drift 20s linear infinite;
-            pointer-events: none;
-            z-index: 0;
+            z-index: -1;
+            transition: background 0.5s ease;
         }
 
-        @keyframes drift {
-            from { transform: translateY(0); }
-            to { transform: translateY(-50px); }
+        #world-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg,
+                    transparent, transparent 4px,
+                    rgba(0, 0, 0, 0.05) 4px, rgba(0, 0, 0, 0.05) 5px
+                ),
+                repeating-linear-gradient(90deg,
+                    transparent, transparent 4px,
+                    rgba(0, 0, 0, 0.05) 4px, rgba(0, 0, 0, 0.05) 5px
+                );
+            pointer-events: none;
         }
 
         header {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(61, 43, 31, 0.85);
             backdrop-filter: blur(10px);
             padding: 30px 20px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5),
+                        inset 0 0 20px rgba(139, 90, 43, 0.3);
             position: relative;
             z-index: 1;
+            border-bottom: 4px solid #8b5a2b;
         }
 
         header h1 {
-            font-size: 3em;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
-                         0 0 40px rgba(255, 255, 255, 0.3);
-            animation: glow 2s ease-in-out infinite alternate;
+            font-size: 2.5em;
+            color: #ffeb3b;
+            text-shadow: 3px 3px 0px #000,
+                         0 0 30px rgba(255, 235, 59, 0.5);
+            letter-spacing: 2px;
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3); }
-            to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.5); }
+        .depth-indicator {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #8b5a2b;
+            z-index: 1000;
+            font-size: 1.1em;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 0px #000;
         }
 
         .container {
             width: 90%;
             max-width: 900px;
             margin: 30px auto;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(61, 43, 31, 0.9);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 8px;
             padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                        inset 0 0 30px rgba(139, 90, 43, 0.2);
+            border: 3px solid #8b5a2b;
             position: relative;
             z-index: 1;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -83,24 +100,24 @@
 
         .container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
         }
         
         h3 {
             text-align: center;
             margin-top: 10px;
             margin-bottom: 20px;
-            font-size: 1.8em;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            font-size: 1.6em;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 0px #000;
         }
         
         p {
             text-align: center;
             margin: 20px 0;
-            line-height: 1.6;
-            font-size: 1.1em;
-            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.8;
+            font-size: 1.05em;
+            color: #f5f5f5;
         }
         
         ul {
@@ -109,68 +126,84 @@
         }
 
         ul li {
-            background: rgba(255, 255, 255, 0.15);
-            margin: 10px 0;
-            padding: 15px 20px;
-            border-radius: 10px;
-            border-left: 4px solid #fff;
+            background: rgba(92, 64, 51, 0.6);
+            margin: 12px 0;
+            padding: 15px 20px 15px 50px;
+            border-radius: 4px;
+            border-left: 5px solid #a0826d;
             transition: all 0.3s ease;
-            line-height: 1.6;
+            line-height: 1.7;
+            position: relative;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         ul li:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(107, 76, 61, 0.7);
             transform: translateX(10px);
-            border-left-color: #ffd700;
+            border-left-color: #d4a574;
+            box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
         }
 
         ul li::before {
-            content: '⚡';
-            margin-right: 10px;
-            font-size: 1.2em;
+            content: '🧱';
+            position: absolute;
+            left: 15px;
+            font-size: 1.3em;
         }
 
         a {
-            color: #ffd700;
+            color: #64b5f6;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease;
         }
 
         a:hover {
-            color: #ffed4e;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            color: #90caf9;
+            text-shadow: 0 0 10px rgba(100, 181, 246, 0.8);
         }
 
         .money-container {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 140, 0, 0.2) 100%);
-            border: 2px solid #ffd700;
+            background: rgba(255, 193, 7, 0.15);
+            border: 3px solid #ffa726;
+            box-shadow: 0 8px 32px rgba(255, 167, 38, 0.3),
+                        inset 0 0 30px rgba(255, 193, 7, 0.2);
+        }
+
+        .money-container h3 {
+            color: #ffd54f;
         }
 
         .recipe-container {
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3) 0%, rgba(205, 133, 63, 0.3) 100%);
-            border: 2px solid #d2691e;
+            background: rgba(121, 85, 72, 0.4);
+            border: 3px solid #a0826d;
+            box-shadow: 0 8px 32px rgba(121, 85, 72, 0.3),
+                        inset 0 0 30px rgba(161, 136, 127, 0.2);
         }
-        .ip-container {
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3) 0%, rgba(205, 133, 63, 0.3) 100%);
-            border: 2px solid #d2691e;
+
+        .recipe-container h3 {
+            color: #d7ccc8;
         }
+
+        .recipe-container ul li::before {
+            content: '🍪';
+        }
+
         footer {
             height: 50px;
             position: relative;
             z-index: 1;
         }
 
-        /* Scroll animation */
         .container {
             opacity: 0;
             animation: fadeInUp 0.8s ease forwards;
         }
 
-        .container:nth-child(2) { animation-delay: 0.2s; }
-        .container:nth-child(3) { animation-delay: 0.4s; }
-        .container:nth-child(4) { animation-delay: 0.6s; }
-        .container:nth-child(5) { animation-delay: 0.8s; }
+        .container:nth-child(3) { animation-delay: 0.2s; }
+        .container:nth-child(4) { animation-delay: 0.4s; }
+        .container:nth-child(5) { animation-delay: 0.6s; }
+        .container:nth-child(6) { animation-delay: 0.8s; }
 
         @keyframes fadeInUp {
             from {
@@ -183,10 +216,9 @@
             }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
             
             .container {
@@ -195,22 +227,35 @@
             }
 
             h3 {
-                font-size: 1.4em;
+                font-size: 1.3em;
             }
 
             p {
                 font-size: 1em;
             }
+
+            ul li {
+                padding-left: 45px;
+            }
+
+            .depth-indicator {
+                font-size: 0.9em;
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="world-background"></div>
+    
+    <div class="depth-indicator">
+        <div id="depth-text">Y: 64 (Surface)</div>
+    </div>
+
     <header>
         <h1>⚔️ Server Rules/Notes ⚔️</h1>
     </header>
-<div class='container ip-container'>
-<h3>Potential spot for rotating ip</h3>
-</div>
+
     <div class="container">
         <h3>Welcome to my server, a little information to get started</h3>
         <p>This is a small server of mine, most people have about a second of latency because my internet provider does not allow me to set up port forwarding. Do not be annoying, as that is annoying. Mainly have fun, the server is set to mostly standard settings, but does deviate in a couple spots</p>
@@ -257,5 +302,83 @@
 
     <footer>
     </footer>
+
+<script>
+const bg = document.getElementById('world-background');
+const depthText = document.getElementById('depth-text');
+
+const layers = [
+    { y: 100, name: 'Sky', gradient: 'linear-gradient(180deg, #87ceeb 0%, #b0d8f5 100%)' },
+    { y: 64, name: 'Surface', gradient: 'linear-gradient(180deg, #8bd448 0%, #7cbd3b 40%, #9b7653 60%, #8b6f47 100%)' },
+    { y: 32, name: 'Stone', gradient: 'linear-gradient(180deg, #7a7a7a 0%, #5a5a5a 50%, #4a4a4a 100%)' },
+    { y: 0, name: 'Deepslate', gradient: 'linear-gradient(180deg, #4a4a4a 0%, #2a2a2a 50%, #1a1a1a 100%)' },
+    { y: -64, name: 'Bedrock', gradient: 'linear-gradient(180deg, #171717 0%, #0d0d0d 50%, #000000 100%)' }
+];
+
+const layerColors = {
+    'Sky': ['#87ceeb', '#b0d8f5'],
+    'Surface': ['#8bd448', '#8b6f47'],
+    'Stone': ['#7a7a7a', '#4a4a4a'],
+    'Deepslate': ['#4a4a4a', '#1a1a1a'],
+    'Bedrock': ['#171717', '#000000']
+};
+
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+function blendColor(color1, color2, percent) {
+    const c1 = hexToRgb(color1);
+    const c2 = hexToRgb(color2);
+    const r = Math.round(c1.r + (c2.r - c1.r) * percent);
+    const g = Math.round(c1.g + (c2.g - c1.g) * percent);
+    const b = Math.round(c1.b + (c2.b - c1.b) * percent);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+function updateBackground() {
+    const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    const totalDepth = layers[0].y - layers[layers.length - 1].y;
+    const currentY = Math.round(layers[0].y - (scrollPercent * totalDepth));
+
+    let currentLayer = layers[0];
+    let nextLayer = layers[1];
+
+    for (let i = 0; i < layers.length - 1; i++) {
+        if (currentY <= layers[i].y && currentY > layers[i + 1].y) {
+            currentLayer = layers[i];
+            nextLayer = layers[i + 1];
+            break;
+        }
+    }
+
+    if (currentY <= layers[layers.length - 1].y) {
+        currentLayer = layers[layers.length - 1];
+        nextLayer = layers[layers.length - 1];
+    }
+
+    const layerDepth = currentLayer.y - nextLayer.y;
+    const depthIntoLayer = currentLayer.y - currentY;
+    const blendPercent = Math.min(Math.max(depthIntoLayer / layerDepth, 0), 1);
+
+    const currentColors = layerColors[currentLayer.name];
+    const nextColors = layerColors[nextLayer.name];
+
+    const topColor = blendColor(currentColors[0], nextColors[0], blendPercent);
+    const bottomColor = blendColor(currentColors[1], nextColors[1], blendPercent);
+
+    bg.style.background = `linear-gradient(180deg, ${topColor} 0%, ${bottomColor} 100%)`;
+
+    depthText.textContent = `Y: ${currentY} (${currentLayer.name})`;
+}
+
+window.addEventListener('scroll', updateBackground);
+updateBackground();
+</script>
 </body>
 </html>
